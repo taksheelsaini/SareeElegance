@@ -229,8 +229,11 @@ export class DatabaseStorage implements IStorage {
       conditions.push(eq(products.isSale, isSale));
     }
 
+    // Apply conditions and sorting
     if (conditions.length > 1) {
       query = query.where(and(...conditions));
+    } else if (conditions.length === 1) {
+      query = query.where(conditions[0]);
     }
 
     // Apply sorting
@@ -498,7 +501,7 @@ export class DatabaseStorage implements IStorage {
       const [updated] = await db
         .update(cartItems)
         .set({ 
-          quantity: existing.quantity + item.quantity,
+          quantity: (existing.quantity || 0) + (item.quantity || 0),
           updatedAt: new Date()
         })
         .where(eq(cartItems.id, existing.id))

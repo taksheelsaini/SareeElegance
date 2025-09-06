@@ -23,8 +23,8 @@ export default function Header() {
     enabled: isAuthenticated,
   });
 
-  const cartCount = cartItems.length;
-  const wishlistCount = wishlistItems.length;
+  const cartCount = Array.isArray(cartItems) ? cartItems.length : 0;
+  const wishlistCount = Array.isArray(wishlistItems) ? wishlistItems.length : 0;
 
   const navigation = [
     { name: "All Categories", href: "/products", active: location === "/products" },
@@ -110,7 +110,7 @@ export default function Header() {
               >
                 <User className="w-4 h-4" />
                 <span className="hidden md:inline text-sm">
-                  {user?.firstName || "Profile"}
+                  {(user as any)?.firstName || "Profile"}
                 </span>
               </Link>
             ) : (
