@@ -13,6 +13,7 @@ import Home from "@/pages/Home";
 import Products from "@/pages/Products";
 import ProductDetail from "@/pages/ProductDetail";
 import Cart from "@/pages/Cart";
+import Checkout from "@/pages/Checkout";
 import Wishlist from "@/pages/Wishlist";
 import Profile from "@/pages/Profile";
 import NotFound from "@/pages/not-found";
@@ -44,6 +45,7 @@ function Router() {
               <Route path="/products" component={Products} />
               <Route path="/products/:slug" component={ProductDetail} />
               <Route path="/cart" component={Cart} />
+              <Route path="/checkout" component={Checkout} />
               <Route path="/wishlist" component={Wishlist} />
               <Route path="/profile" component={Profile} />
               <Route path="/orders" component={Profile} />

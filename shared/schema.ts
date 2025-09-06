@@ -132,6 +132,7 @@ export const orders = pgTable("orders", {
   billingAddress: jsonb("billing_address"),
   paymentMethod: varchar("payment_method", { length: 50 }),
   paymentStatus: varchar("payment_status", { length: 50 }).default('pending'),
+  paymentIntentId: varchar("payment_intent_id", { length: 255 }),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

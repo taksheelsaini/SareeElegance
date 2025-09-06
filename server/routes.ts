@@ -279,6 +279,83 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Checkout and Payment
+  app.post('/api/checkout/create-payment-intent', isAuthenticated, async (req: any, res) => {
+    try {
+      const { amount, currency = 'inr' } = req.body;
+      
+      // Create mock payment intent for demo
+      const paymentIntent = {
+        id: `pi_mock_${Date.now()}`,
+        amount: amount,
+        currency: currency,
+        status: 'requires_payment_method',
+        client_secret: `pi_mock_${Date.now()}_secret_${Math.random().toString(36).substr(2, 9)}`,
+      };
+      
+      res.json(paymentIntent);
+    } catch (error) {
+      console.error("Error creating payment intent:", error);
+      res.status(500).json({ message: "Failed to create payment intent" });
+    }
+  });
+
+  app.post('/api/checkout/create-order', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { paymentIntentId, shippingAddress, billingAddress } = req.body;
+      
+      // Get cart items
+      const cartItems = await storage.getCartItems(userId);
+      if (cartItems.length === 0) {
+        return res.status(400).json({ message: "Cart is empty" });
+      }
+      
+      // Calculate totals
+      const subtotal = cartItems.reduce((sum, item) => sum + (parseFloat(item.product.price) * item.quantity), 0);
+      const shipping = subtotal > 2999 ? 0 : 99;
+      const tax = subtotal * 0.18;
+      const total = subtotal + shipping + tax;
+      
+      // Create order
+      const orderData = {
+        userId,
+        orderNumber: `ORD-${Date.now()}`,
+        status: 'confirmed',
+        subtotal: subtotal.toString(),
+        tax: tax.toFixed(2),
+        shipping: shipping.toString(),
+        total: total.toString(),
+        shippingAddress,
+        billingAddress,
+        paymentMethod: 'card',
+        paymentStatus: 'completed',
+        paymentIntentId,
+      };
+      
+      const order = await storage.createOrder(orderData);
+      
+      // Create order items
+      for (const item of cartItems) {
+        await storage.createOrderItem({
+          orderId: order.id,
+          productId: item.product.id,
+          quantity: item.quantity,
+          price: item.product.price,
+          total: (parseFloat(item.product.price) * item.quantity).toString(),
+        });
+      }
+      
+      // Clear cart
+      await storage.clearCart(userId);
+      
+      res.json(order);
+    } catch (error) {
+      console.error("Error creating order:", error);
+      res.status(500).json({ message: "Failed to create order" });
+    }
+  });
+
   // Orders
   app.get('/api/orders', isAuthenticated, async (req: any, res) => {
     try {

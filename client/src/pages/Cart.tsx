@@ -339,10 +339,12 @@ export default function Cart() {
                 )}
               </div>
 
-              <Button className="w-full mt-6 btn-primary" size="lg" data-testid="button-checkout">
-                <Lock className="w-4 h-4 mr-2" />
-                Proceed to Checkout
-              </Button>
+              <Link href="/checkout">
+                <Button className="w-full mt-6 btn-primary" size="lg" data-testid="button-checkout">
+                  <Lock className="w-4 h-4 mr-2" />
+                  Proceed to Checkout
+                </Button>
+              </Link>
 
               <div className="mt-6 text-center">
                 <p className="text-sm text-muted-foreground">
