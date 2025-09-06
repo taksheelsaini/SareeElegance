@@ -32,7 +32,7 @@ export function getSession() {
     tableName: "sessions",
   });
   return session({
-    secret: process.env.SESSION_SECRET!,
+    secret: process.env.SESSION_SECRET || 'temporary-secret-for-development-only-please-change-in-production',
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
