@@ -1,0 +1,95 @@
+Create a complete, production-ready e-commerce website for "Elegance," a premium saree-selling platform inspired by Amazon India, Myntra, and Flipkart. This website must focus exclusively on selling sarees, with a luxurious, high-end design that appeals to discerning customers. Provide a step-by-step guide from initial setup to deployment, including all technologies, designs, frontend components, backend architecture, authentication system, security measures, and scalability considerations. Assume no prior knowledge and explain every detail explicitly. The final output should be a fully functional website that works seamlessly on any OS and browser, is secure against hacking and source code theft, and is ready for worldwide customer deployment.
+
+1. Project Overview
+Website Name: Elegance
+Purpose: An online marketplace for buying and selling premium sarees (traditional Indian garments). Users can browse categories (e.g., silk, cotton, designer, bridal), view product details, add to cart, checkout, manage accounts, and track orders.
+Target Audience: Women and families seeking high-quality, authentic sarees for occasions like weddings, festivals, and daily wear.
+Key Features:
+Product catalog with filtering, sorting, and search.
+User accounts with profiles, wishlists, and order history.
+Secure checkout with multiple payment options.
+Responsive design for desktop, tablet, and mobile.
+Admin panel for managing products, orders, and users.
+Blog for saree trends and care tips.
+Customer support features like FAQs and live chat.
+Assumptions to Avoid: Do not assume any existing code or tools; specify every file, library, and command. Include placeholders for all content (e.g., images, text) and explain how to source or create them.
+2. Technologies and Tools
+Frontend:
+HTML5 for structure.
+CSS3 for styling (use custom properties for variables, Flexbox/Grid for layouts, and media queries for responsiveness).
+Vanilla JavaScript (ES6+) for interactivity (no frameworks like React unless specified; use native DOM manipulation).
+Font Awesome for icons.
+Google Fonts (e.g., Poppins for body text, Playfair Display for headings).
+Backend:
+Node.js with Express.js for server-side logic and API endpoints.
+MySQL for database (use Sequelize ORM for queries).
+JWT (JSON Web Tokens) for authentication.
+Additional Tools:
+Git for version control.
+VS Code as the code editor.
+Postman for API testing.
+Docker for containerization (optional for deployment).
+Stripe or Razorpay for payment processing.
+Nodemailer for email notifications.
+Hosting/Deployment: Vercel/Netlify for frontend, Heroku/AWS for backend, and a cloud database like PlanetScale for MySQL.
+Security Libraries: Helmet for HTTP headers, bcrypt for password hashing, express-rate-limit for rate limiting, and CORS for cross-origin requests.
+3. Design Guidelines
+Aesthetic: Ultra-luxurious and premium, with a color palette of deep purples (#667eea), golds (#ffd93d), whites (#ffffff), and subtle gradients. Use glassmorphism (backdrop blur, semi-transparent elements), elegant typography, and smooth animations (e.g., hover effects with CSS transitions).
+Layout: Clean, minimal, and intuitive. Hero sections with large images, grid-based product displays, and sticky navigation.
+Inspiration: Amazon's product grids and search, Myntra's fashion focus, Flipkart's user-friendly checkout.
+Accessibility: WCAG 2.1 compliant (alt text for images, keyboard navigation, high contrast).
+Responsiveness: Mobile-first design; test on Chrome, Firefox, Safari, Edge, and mobile browsers.
+Branding: Logo as "Elegance" in elegant script font; tagline "Elegance in Every Thread."
+4. Frontend Development
+Structure: Use a modular folder structure (e.g., css, js, images, pages).
+Key Pages and Components (Create each as separate HTML files with linked CSS/JS):
+index.html (Homepage): Hero banner with saree image carousel, featured products grid, categories, testimonials, newsletter signup.
+collection.html (Product Collection): Filter sidebar (by category, price, size), sortable grid of product cards, pagination.
+product.html (Product Detail): Image gallery, price, description, size/color selectors, reviews, add-to-cart button.
+cart.html (Shopping Cart): List of items with quantities, totals, checkout button.
+checkout.html (Checkout): Form for shipping/billing, payment options, order summary.
+login.html (Login/Register): Forms for sign-in/sign-up with validation.
+account.html (User Dashboard): Profile info, order history, wishlist.
+about.html (About Us): Story, team photos, mission.
+contact.html (Contact): Form with fields for name, email, message; map embed.
+blog.html (Blog): Article list with images and excerpts.
+faq.html (FAQ): Accordion-style Q&A.
+Other Pages: As listed in previous interactions (e.g., silk.html, terms.html, 404.html).
+Components: Reusable elements like product cards, navigation bars, footers, modals.
+Interactivity: Use JavaScript for form validation, cart updates, image sliders, and API calls.
+Styling: Create style.css with luxury classes (e.g., .luxury-bg for gradients, .luxury-btn for buttons).
+Images: Use placeholder saree images from Unsplash or create custom ones; optimize for web (WebP format, lazy loading).
+5. Backend Development
+Architecture: RESTful API with endpoints for products, users, orders, etc.
+Database Schema:
+Tables: users (id, email, password, name), products (id, name, price, category, images), orders (id, user_id, items, status), reviews (id, product_id, user_id, rating, comment).
+API Endpoints:
+GET /api/products: Fetch products with filters.
+POST /api/users/register: User registration.
+POST /api/orders: Create order.
+Use middleware for authentication (verify JWT on protected routes).
+Authentication: Register/login with email/password; store JWT in localStorage; password reset via email.
+File Handling: Use Multer for image uploads to a cloud service like Cloudinary.
+Email: Send order confirmations and password resets.
+6. Security Measures
+Prevention of Hacking: Use HTTPS, input sanitization (e.g., via express-validator), SQL injection prevention (parameterized queries), XSS protection (Helmet), and CSRF tokens.
+Source Code Protection: Obfuscate JS with tools like UglifyJS; use environment variables for secrets; avoid exposing API keys.
+Data Protection: Encrypt sensitive data (e.g., passwords with bcrypt); comply with GDPR for user data.
+Rate Limiting: Limit API requests to prevent DDoS.
+Testing: Use tools like OWASP ZAP for vulnerability scanning.
+7. Step-by-Step Development Plan
+Setup Environment: Install Node.js, MySQL, VS Code. Create project folders.
+Design Wireframes: Sketch layouts for each page using Figma or paper.
+Build Database: Create MySQL schema and seed with sample data.
+Develop Backend: Set up Express server, define routes, implement authentication.
+Create Frontend: Build HTML pages, style with CSS, add JS interactivity.
+Integrate Frontend/Backend: Connect via fetch API calls.
+Add Security: Implement all security measures.
+Testing: Unit tests with Jest, integration tests, cross-browser testing.
+Deployment: Host frontend on Netlify, backend on Heroku, database on PlanetScale.
+Launch and Monitor: Set up analytics (Google Analytics), error logging (Sentry).
+8. Testing and Maintenance
+Testing: Manual testing for UI/UX, automated tests for APIs.
+Maintenance: Regular updates for security patches, performance monitoring, and user feedback integration.
+Scalability: Use caching (Redis), CDN for images, and horizontal scaling for traffic spikes.
+This prompt provides a complete blueprint. If using Framer, adapt components accordingly; otherwise, follow for full-stack development. Provide all code snippets, commands, and resources needed.
