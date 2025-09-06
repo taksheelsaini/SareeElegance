@@ -34,12 +34,12 @@ const defaultCategories = [
 ];
 
 export default function CategoryGrid() {
-  const { data: categories = [], isLoading } = useQuery({
+  const { data: categories = [], isLoading } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
 
   // Use default categories if API returns empty or is loading
-  const displayCategories = categories.length > 0 ? categories : defaultCategories;
+  const displayCategories = (categories as Category[]).length > 0 ? categories as Category[] : defaultCategories;
 
   if (isLoading) {
     return (
@@ -74,7 +74,7 @@ export default function CategoryGrid() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {displayCategories.map((category) => (
+          {displayCategories.map((category: Category | any) => (
             <Link
               key={category.id || category.slug}
               href={`/products?categoryId=${category.id || category.slug}`}

@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 import type { ProductWithImages } from "@shared/schema";
 
 export default function TrendingProducts() {
-  const { data: products = [], isLoading } = useQuery({
+  const { data: products = [], isLoading } = useQuery<ProductWithImages[]>({
     queryKey: ["/api/products/featured?limit=8"],
   });
 
@@ -63,10 +63,10 @@ export default function TrendingProducts() {
           </div>
         </div>
 
-        {products.length > 0 ? (
+        {(products as ProductWithImages[]).length > 0 ? (
           <>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {products.map((product: ProductWithImages) => (
+              {(products as ProductWithImages[]).map((product: ProductWithImages) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
