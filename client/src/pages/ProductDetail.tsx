@@ -8,8 +8,6 @@ import {
   Truck, 
   RotateCcw, 
   Shield, 
-  ChevronLeft,
-  ChevronRight,
   Minus,
   Plus,
   Share2
@@ -22,6 +20,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { apiRequest } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
+import ProductGallery from "@/components/ProductGallery";
+import SizeGuide from "@/components/SizeGuide";
 import type { ProductWithDetails, Review } from "@shared/schema";
 
 export default function ProductDetail() {
@@ -31,7 +31,6 @@ export default function ProductDetail() {
   const queryClient = useQueryClient();
   
   const slug = location.split('/').pop() || '';
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isInWishlist, setIsInWishlist] = useState(false);
 
@@ -211,66 +210,11 @@ export default function ProductDetail() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Product Images */}
-          <div className="space-y-4">
-            <div className="relative overflow-hidden rounded-2xl elegant-shadow">
-              <img
-                src={product.images?.[selectedImageIndex]?.imageUrl || primaryImage?.imageUrl || "/placeholder-product.jpg"}
-                alt={product.images?.[selectedImageIndex]?.altText || product.name}
-                className="w-full h-96 lg:h-[500px] object-cover"
-                data-testid="img-product-main"
-              />
-              
-              {/* Image Navigation */}
-              {product.images && product.images.length > 1 && (
-                <>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedImageIndex(prev => 
-                      prev === 0 ? product.images!.length - 1 : prev - 1
-                    )}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30"
-                    data-testid="button-prev-image"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </Button>
-                  
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedImageIndex(prev => 
-                      prev === product.images!.length - 1 ? 0 : prev + 1
-                    )}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30"
-                    data-testid="button-next-image"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </Button>
-                </>
-              )}
-            </div>
-
-            {/* Thumbnail Images */}
-            {product.images && product.images.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto">
-                {product.images.map((image, index) => (
-                  <button
-                    key={image.id}
-                    onClick={() => setSelectedImageIndex(index)}
-                    className={`flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
-                      selectedImageIndex === index ? 'border-primary' : 'border-transparent'
-                    }`}
-                    data-testid={`button-thumbnail-${index}`}
-                  >
-                    <img
-                      src={image.imageUrl}
-                      alt={image.altText || `${product.name} thumbnail ${index + 1}`}
-                      className="w-20 h-20 object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
+          <div>
+            <ProductGallery 
+              images={product.images || []} 
+              productName={product.name} 
+            />
           </div>
 
           {/* Product Info */}
@@ -425,6 +369,11 @@ export default function ProductDetail() {
                 >
                   <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-ruby text-ruby' : ''}`} />
                 </Button>
+              </div>
+
+              {/* Size Guide */}
+              <div className="flex gap-4 pt-4">
+                <SizeGuide category={product.category?.name} />
               </div>
             </div>
 
